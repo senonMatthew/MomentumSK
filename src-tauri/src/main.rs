@@ -6,7 +6,6 @@
 use tauri::{Manager, Size, PhysicalSize, SystemTray, SystemTrayMenu, CustomMenuItem, SystemTrayMenuItem, SystemTrayEvent, Window, RunEvent, WindowEvent};
 use MomentumSK::{functsys::{ read_blocklist, get_process_info, add_blockentry, del_blockentry, get_processes }, config::{ write_config_data, get_config_data, read_hyperfocus, read_forceexit }, scan::{persistent_foreground, persistent_scan}, scanner::{foreground_scanner, background_scanner}, sysfunc::{fresh_install, check_identifier}};
 
-
 #[tokio::main]
 async fn main() {
   let quit = CustomMenuItem::new("quit".to_string(), "Quit");
@@ -125,15 +124,18 @@ async fn start_timer(time: u64) -> bool {
     if !read_hyperfocus() {
       // if normal focus (notify)
       foreground_scanner(time+2).await;
+      println!("DEBUG: Normal Focus!");
       return false
     } else {
       // if hyper focus (instant minimize)
       foreground_scanner(time+2).await;
+      println!("DEBUG: Hyper Focus!");
       return true
     }
   } else {
     // if force exit (persistent force exit)
     background_scanner(time+2).await;
+    println!("DEBUG: Force Exit!");
     return true
   }
 }

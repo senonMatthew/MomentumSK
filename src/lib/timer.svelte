@@ -9,13 +9,13 @@
   let buttonClick = false;
   let timerState = false;
 
-  async function bgImg() {
-    let bg = await document.getElementById('mainWindow');
+  // async function bgImg() {
+  //   let bg = await document.getElementById('mainWindow');
     
-    bg.style.backgroundImage = timerBackground;
-  }
+  //   bg.style.backgroundImage = timerBackground;
+  // }
 
-bgImg();
+  // bgImg();
 
   appWindow.setSize(new PhysicalSize(470, 516));
   appWindow.setPosition(new LogicalPosition(1415, 493));
@@ -42,14 +42,14 @@ bgImg();
   async function timer(){
     console.log(`State is at ${timerState}`)
     document.getElementById("navbutton").setAttribute('href', 'javascript:await hideApp()')
-    var min = 15;
+    var min = 0.5;
     var sec = min * 60;
     var secClone = sec;
 
     if (!timerState) {
       timerState = true;
       autoHide();
-      let x = invoke('start_timer', sec);
+      let x = invoke('start_timer', { time: sec });
       console.log(`Switching on!`)
       
       if (x) {
@@ -57,6 +57,7 @@ bgImg();
       } else {
         console.log("false")
       };
+
       var timer = setInterval(function(){
         var minutes = Math.floor((sec-1) / 60);
         var seconds = Math.floor((sec-1) % 60);
@@ -97,7 +98,7 @@ bgImg();
         <div class="top_coin" id="timer_button" on:click={timer}><div class="face buttonOuter"id="buttonOuter" ><div class="face buttonInner"id="buttonInner" ><section id="textButton" ><p2 class="textSmall" id="textSmall">start</p2><p3 class="textLarge" id="textLarge">Focus</p3></section></div></div></div>
     </div>
     <div class="Timer">
-      <section><p4 id="timer">15:00</p4></section>
+      <section><p4 id="timer">0:30</p4></section>
 
     </div>
   </div>
@@ -125,6 +126,7 @@ bgImg();
       height: 516px;
       width: 470px;
       background: 0px -10px/155% 125% url('/static/timerBackground.jpg');
+      /* background-image: 0px -10px/155% 125% url('/static/timerBackground.jpg'); */
       border-radius: 35px;
     }
 

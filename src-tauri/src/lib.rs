@@ -49,10 +49,10 @@ pub mod sysfunc {
         fs::File::create(&prj_settings).unwrap();
 
         fs::write(&prj_settings, r#"{
-            "Preferences":{
-                "whitelist": "true",
-                "hyperfocus": "true",
-                "forceExit": "true"
+            "preferences":{
+                "whitelist": true,
+                "hyperfocus": true,
+                "forceExit": true
             },
             "Blocker Settings":{
                 "helloBlock": "yes"
@@ -219,7 +219,7 @@ mod blocker {
             println!("DEBUG: Program has been found! Attempting to close.");
             force_exit_pid(pid);
         } else {
-            println!("DEBUG: Program has been found! Attempting to minimize.");
+            println!("DEBUG: Not yet programmed. (Line 222, librs)");
             // force_minimize(pid);
         }
     }
@@ -514,6 +514,7 @@ pub mod config {
     }
  
     pub fn write_config_data(get_category: &str, get_params: &str, write_bool: bool) {
+        // println!("{}, {}, {}", get_category, get_params, write_bool);
         let dir = ProjectDirs::from("com", "Eisvogel", "Momentum").unwrap();
         let conf_dir = dir.config_dir();
         let mut file = File::open(conf_dir.join("config.json")).expect("File not found!");
@@ -711,7 +712,7 @@ pub mod scanner {
                         if crate::config::read_forceexit() {
                             act_on_program_pid(_pid);
                         } else {
-                            println!("Not sure how you got here, but you're not supposed to see this message!");
+                            println!("DEBUG: User somehow managed to enable Force Exit without Hyper-Focus, and trick the program into using it.");
                         }
                     }
                 }

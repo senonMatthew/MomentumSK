@@ -1,0 +1,87 @@
+
+
+pub mod sysfunc { 
+    use std::fs;
+    use directories::ProjectDirs;
+
+    fn create_directories() {
+        let dir = ProjectDirs::from("com", "Eisvogel", "Momentum").unwrap();
+
+        let directories  = [dir.data_dir(), dir.config_dir(), dir.cache_dir()];
+        
+        for directories in directories.iter() {
+            match fs::create_dir_all(directory) {
+                Ok(_) => println!("DEBUG: {} created successfully", directory.display()),
+                Err(e) => println!("ERROR: Error creating directory in {}: {}", directory.display(), e),
+            } 
+        }
+    }
+
+    fn create_new_files() {
+        let dir = ProjectDirs::from("com", "Eisvogel", "Momentum").unwrap();
+
+        let prj_data = dir.data_dir();
+        let prj_conf = dir.config_dir();
+        let prj_cach = dir.cache_dir();
+
+            // Creates blocklist files
+        let prj_blocklist = prj_data.join("blocklist.json");
+
+        fs::File::create(&prj_blocklist).unwrap();
+
+        fs::write(&prj_blocklist, r#"[
+            {
+                "If this message still exists, something went terribly wrong. Delete the DO_NOT_DELETE file to attempt a fresh reset."
+            }
+        ]"#).ok();
+
+        // Creates config files
+        let prj_settings = prj_conf.join("config.json");
+
+        fs::File::create(&prj_settings).unwrap();
+
+        fs::write(&prj_settings, r#"{
+            "Preferences":{
+                "whitelist": "true",
+                "hyperfocus": "true",
+                "forceExit": "true"
+            },
+            "Blocker Settings":{
+                "helloBlock": "yes"
+            },
+            "Notification Settings":{
+                "helloNotif": "yes"
+            },
+            "Interface Settings":{
+                "helloInter": "yes"
+            },
+            "Database Settings":{
+                "helloData": "yes"
+            }
+        }"#).ok();
+
+        // Creates cache files
+        let prj_local = prj_cach.join("volatileProgramData.json");
+
+        fs::File::create(&prj_local).unwrap();
+
+        fs::write(&prj_local, r#"[
+            {
+                "threadName": "\\0",
+                {
+                    "pid": "\\0",
+                    "path": "\\0"
+                }
+            }
+        ]"#).ok();
+
+        // Creates identifier file
+        let prj_settings = prj_conf.join("DO_NOT_DELETE");
+
+        fs::File::create(&prj_settings).unwrap();
+
+        fs::write(&prj_settings, "Do not delete this file! Deleting this file will cause the program to reset everything, removing all your settings, blocklist, etc. Also useful for hard resets.").ok();
+    }
+
+    
+}
