@@ -1,6 +1,5 @@
-# Svelte-Kit + Vite
-
-This template should help get you started developing with Tauri and Svelte-Kit in Vite.
+# Momentum
+Momentum is an app blocker program developed in Tauri, using SvelteKit and Rust.
 
 ## Recommended IDE Setup
 
